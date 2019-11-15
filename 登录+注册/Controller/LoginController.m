@@ -118,11 +118,35 @@
     [_passwordTextField endEditing:YES];
 }
 - (void)loginButtonAction:(UIButton *)button {
-    ZXDTabBarController *tabbarVc = [ZXDTabBarController new];
-    [self presentViewController:tabbarVc animated:YES completion:nil];
+    if (![self isMobileNumberOnly:_phoneTextField.text NonNull]) {
+        [WHToast showErrorWithMessage:@"请输入正确的手机号码"];
+        return;
+    }
+    if (_passwordTextField.text.length < 6) {
+        [WHToast showErrorWithMessage:@"请输入6位数以上密码"];
+        return;
+    }
+    WeakSelf;
+   
+    [ZXD_NetWorking postWithUrl:[rootUrl stringByAppendingString:@"/api/index/userLogin"] params:@{
+                                                                                                   @"type":@"2",
+                                                                                                   @"account":_phoneTextField.text,
+                                                                                                   @"password":_passwordTextField.text,
+                                                                                                   } success:^(id  _Nonnull response) {
+                                                                                                       if ([response[@"status"] intValue] != 1) {
+                                                                                                           [WHToast showErrorWithMessage:response[@"msg"]];
+                                                                                                       } else {
+                                                                                                           [[NSUserDefaults standardUserDefaults] setObject:response[@"data"][@"token"] forKey:@"user-token"];
+                                                                                                           ZXDTabBarController *tabbarVc = [ZXDTabBarController new];
+                                                                                                           [weakSelf presentViewController:tabbarVc animated:YES completion:nil];
+                                                                                                       }
+    } fail:^(NSError * _Nonnull error) {
+         [WHToast showErrorWithMessage:@"网络错误"];
+    } showHUD:YES hasToken:NO];
 }
 - (void)toRegisters:(UIButton *)button {
     [self presentViewController:[[RegisterController alloc] init] animated:YES completion:nil];
 }
 @end
+
 

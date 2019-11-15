@@ -4,7 +4,8 @@
 //
 //  Created by 张昊 on 2019/11/4.
 //  Copyright © 2019 张兴栋. All rights reserved.
-//
+
+
 #import "ShopCollectionCell.h"
 #import "CommodityDetailsController.h"
 #import "ClassificationCommodityController.h"
@@ -13,6 +14,7 @@
 
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UICollectionView *collectionView;
+
 
 @end
 
@@ -32,6 +34,23 @@
     rightButton.frame = CGRectMake(0, 0, 35, 35);
     [rightButton setImage:[[UIImage imageNamed:@"details_serch"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    if (_listModelArray) {
+        [self.collectionView reloadData];
+    } else {
+        [self connetToIneternet];
+    }
+}
+    
+- (void)connetToIneternet {
+    WeakSelf;
+    [ZXD_NetWorking postWithUrl:[rootUrl stringByAppendingString:@"/api/product/getGoodsList"] params:@{@"cate_id":_goodsId NonNull} success:^(id  _Nonnull response) {
+        if ([response[@"status"] intValue] == 1) {
+                weakSelf.listModelArray = [GoodsListModel mj_objectArrayWithKeyValuesArray:response[@"data"][@"goods_list"]];
+                [weakSelf.collectionView reloadData];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        
+    } showHUD:YES hasToken:YES];
 }
 
 - (UIView *)headerView {
@@ -43,6 +62,7 @@
 }
 
 - (void)addSubViews {
+    
     UIButton *numberButtton = [[UIButton alloc] initWithFrame:AutoFrame(95, 13, 45, 17)];
     [numberButtton setTitle:@"销量" forState:UIControlStateNormal];
     [numberButtton setImage:[UIImage imageNamed:@"details_sort"] forState:UIControlStateNormal];
@@ -62,8 +82,6 @@
     [_headerView addSubview:priceButtton];
 }
 
-
-
 - (void)addCollectionView {
     UICollectionViewFlowLayout *flowLt = [[UICollectionViewFlowLayout alloc]init];
     //布局
@@ -75,12 +93,10 @@
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_collectionView registerClass:[ShopCollectionCell class] forCellWithReuseIdentifier:@"ShopCollectionCell"];
     [self.view addSubview:_collectionView];
-    
-    
-    
 }
-#pragma mark -------------------------------- CollectionView dataSource,delegate
 
+
+#pragma mark -------------------------------- CollectionView dataSource,delegate
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -88,18 +104,18 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 10;
+    return _listModelArray.count;
 }
 //header高度
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return CGSizeMake(0.000, 0.000);
+    return CGSizeZero;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayou referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(0.000, 0.000);
+    return CGSizeZero;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     ShopCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ShopCollectionCell" forIndexPath:indexPath] ;
+    cell.listModel = _listModelArray[indexPath.row];
     return cell;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -112,8 +128,10 @@
 
 #pragma mark -- item点击跳转
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    [self.navigationController pushViewController:[CommodityDetailsController new] animated:YES];
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    CommodityDetailsController *cdvc = [CommodityDetailsController new];
+    cdvc.idName = [_listModelArray[indexPath.row] idName] NonNull;
+    [self.navigationController pushViewController:cdvc animated:YES];
 }
 
 

@@ -56,4 +56,15 @@
     [self.contentView addSubview:_priceLabel];
 }
 
+- (void)setTypeModel:(HomeTypeModel *)typeModel {
+    _typeModel = typeModel;
+    if (typeModel) {
+        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:typeModel.img] placeholderImage:[UIImage imageNamed:@"zhanwei3"]];
+        _nameLabel.text = NoneNull(typeModel.title);
+        _explainLabel.hidden = YES;
+        _numberLabel.text = [NoneNull(typeModel.sale_num) stringByAppendingString:@"人付款"];
+        _priceLabel.text = [@"会员价：￥" stringByAppendingString:NoneNull(typeModel.price)];
+    }
+}
+
 @end

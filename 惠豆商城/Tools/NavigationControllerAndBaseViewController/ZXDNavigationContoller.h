@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXDNavigationContoller : UINavigationController
+
+- (void)setWhiteBackButton;
 - (void)changeBackItemToWhite;
 - (void)changeBackItemToBlack;
 - (void)changeTextTowhite;

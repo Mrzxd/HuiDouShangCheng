@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GoodsListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ShopCollectionCell : UICollectionViewCell
+
+@property (nonatomic, strong) GoodsListModel *listModel;
+
 @end
 
 NS_ASSUME_NONNULL_END

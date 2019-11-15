@@ -21,6 +21,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
 };
 
 @implementation ZXD_NetWorking
+    
 
 + (ZXD_NetWorking *)sharedZXD_NetWorking {
     static dispatch_once_t onceToken;
@@ -40,12 +41,17 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
     return tasks;
 }
 
-+ (ZXDURLSessionTask *)getWithUrl:(NSString *)url params:(NSDictionary *)params success:(void (^)(id _Nonnull))success fail:(void (^)(NSError * _Nonnull))fail showHUD:(BOOL)showHUD {
-    return [self baseRequestType:ZXD_NetWorking_ENUM_GET url:url params:params success:success fail:fail showHUD:showHUD];
++ (ZXDURLSessionTask *)getWithUrl:(NSString *)url params:(NSDictionary *)params success:(void (^)(id _Nonnull))success fail:(void (^)(NSError * _Nonnull))fail showHUD:(BOOL)showHUD hasToken:(BOOL)hasToken {
+    return [self baseRequestType:ZXD_NetWorking_ENUM_GET url:url params:params success:success fail:fail showHUD:showHUD hasToken:hasToken];
 }
 
-+ (ZXDURLSessionTask *)postWithUrl:(NSString *)url params:(NSDictionary *)params success:(ZXDResponseSuccess)success fail:(ZXDResponseFail)fail showHUD:(BOOL)showHUD {
-    return [self baseRequestType:ZXD_NetWorking_ENUM_POST url:url params:params success:success fail:fail showHUD:showHUD];
++ (ZXDURLSessionTask *)postWithUrl:(NSString *)url
+                            params:(NSDictionary *)params
+                           success:(ZXDResponseSuccess)success
+                              fail:(ZXDResponseFail)fail
+                           showHUD:(BOOL)showHUD
+                          hasToken:(BOOL)hasToken {
+    return [self baseRequestType:ZXD_NetWorking_ENUM_POST url:url params:params success:success fail:fail showHUD:showHUD hasToken:hasToken];
 }
 
 +(ZXDURLSessionTask *)baseRequestType:(ZXD_NetWorking_ENUM)type
@@ -53,19 +59,24 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
                               params:(NSDictionary *)params
                              success:(ZXDResponseSuccess)success
                                 fail:(ZXDResponseFail)fail
-                             showHUD:(BOOL)showHUD {
+                             showHUD:(BOOL)showHUD
+                            hasToken:(BOOL)hasToken
+    {
 //   DLog(@"请求地址----%@\n    请求参数----%@",url,params);
     if (url==nil) {
         return nil;
     }
     
     if (showHUD) {
-        [MBProgressHUD showHUDAddedTo:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+        [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     }
     
     //检查地址中是否有中文
     NSString *urlStr=[NSURL URLWithString:url]?url:[self strUTF8Encoding:url];
     AFHTTPSessionManager *manager = [self getAFManager];
+        if (hasToken) {
+            [manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"user-token"] forHTTPHeaderField:@"user-token"];
+        }
     ZXDURLSessionTask *sessionTask=nil;
     if (type == 1) {
         sessionTask = [manager GET:urlStr parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -77,7 +88,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
             }
             [[self tasks] removeObject:sessionTask];
             if (showHUD == YES) {
-                [MBProgressHUD hideHUDForView:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+                [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             DLog(@"error=%@",error);
@@ -86,7 +97,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
             }
             [[self tasks] removeObject:sessionTask];
             if (showHUD==YES) {
-                [MBProgressHUD hideHUDForView:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+                [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
             }
         }];
     } else {
@@ -99,7 +110,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
             }
             [[self tasks] removeObject:sessionTask];
             if (showHUD==YES) {
-                [MBProgressHUD hideHUDForView:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+                [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             DLog(@"error=%@",error);
@@ -108,7 +119,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
             }
             [[self tasks] removeObject:sessionTask];
             if (showHUD==YES) {
-                [MBProgressHUD hideHUDForView:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+                [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
             }
         }];
     }
@@ -125,7 +136,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
         return nil;
     }
     if (showHUD==YES) {
-        [MBProgressHUD showHUDAddedTo:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+        [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     }
     //检查地址中是否有中文
     NSString *urlStr=[NSURL URLWithString:url]?url:[self strUTF8Encoding:url];
@@ -154,7 +165,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
         }
         [[self tasks] removeObject:sessionTask];
         if (showHUD==YES) {
-            [MBProgressHUD hideHUDForView:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         DLog(@"error=%@",error);
@@ -163,7 +174,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
         }
         [[self tasks] removeObject:sessionTask];
         if (showHUD==YES) {
-            [MBProgressHUD hideHUDForView:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
         }
     }];
     if (sessionTask) {
@@ -180,7 +191,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
         return nil;
     }
     if (showHUD==YES) {
-        [MBProgressHUD showHUDAddedTo:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+        [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     }
     NSURLRequest *downloadRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     AFHTTPSessionManager *manager = [self getAFManager];
@@ -214,7 +225,7 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
             }
         }
         if (showHUD==YES) {
-            [MBProgressHUD hideHUDForView:[GlobalSingleton gS_ShareInstance].systemWindow animated:YES];
+            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
         }
     }];
     //开始启动任务

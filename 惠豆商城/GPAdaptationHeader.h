@@ -12,17 +12,20 @@
 #ifdef __OBJC__
 
 
+#import "ZXDBaseViewController.h"
+#import "ZLImageViewDisplayView.h"
+#import "UIViewController+ImagePicker.h"
 //#import "UIScrollView+MJRefreshEX.h"
-//#import "ZXD_NetWorking.h"
-//#import <MJExtension/MJExtension.h>
-//#import <MBProgressHUD.h>
-//#import "WHToast.h"
-//#import <Masonry/Masonry.h>
+#import "ZXD_NetWorking.h"
+#import <MJExtension/MJExtension.h>
+#import <MBProgressHUD.h>
+#import "WHToast.h"
+#import <Masonry/Masonry.h>
 #import "YTSegmentBar.h"
-//#import "Masonry.h"
 //#import "ZXDNavigationContoller.h"
-//#import "NSObject+JudgmentClass.h"
-//#import <SDWebImage/UIImageView+WebCache.h>
+#import "NSObject+JudgmentClass.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "惠豆商城-Swift.h"
 
 #endif
 
@@ -35,11 +38,13 @@
 #endif
 
 
-#define  rootUrl @"http://"
+#define  rootUrl @"http://huidoushop.huizukeji.cn"
 
 #define NonNull ?:@""
+#define NoneNull(x)  [NSString stringWithFormat:@"%@", [x isKindOfClass:[NSNumber class]]?(NSNumber *)(x?x:@0):(NSString *)([x isKindOfClass:[NSNull class]] ?(x = @""):(([x length] > 0)?x:@""))]
  #define NonNullNum ?:@0
 #define WeakSelf  __weak __typeof(&*self)weakSelf = self;
+#define StrongSelf  __strong typeof(weakSelf) strongSelf = weakSelf;
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
 #define RGBHex(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]

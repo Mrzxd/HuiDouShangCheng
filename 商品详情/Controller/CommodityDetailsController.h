@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CommodityDetailsController : ZXDBaseViewController
 
+@property (nonatomic, strong) NSString *idName;
+
 @end
 
 NS_ASSUME_NONNULL_END

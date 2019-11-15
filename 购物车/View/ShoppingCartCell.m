@@ -15,7 +15,9 @@
 @end
 
 @implementation ShoppingCartCell {
-    UILabel *numberLabel;
+    UILabel *nameLabel;
+    UILabel *weightLabel;
+    UILabel *priceLabel;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -40,20 +42,20 @@
 
 - (void)setUpUI {
     
-    UIButton *selectButton = [[UIButton alloc] initWithFrame:AutoFrame(0, 31, 48, 48)];
-    [selectButton setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
-    [selectButton setImage:[UIImage imageNamed:@"checklist"] forState:UIControlStateSelected];
-    [selectButton addTarget:self action:@selector(selectButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:selectButton];
+    _selectButton = [[UIButton alloc] initWithFrame:AutoFrame(0, 31, 48, 48)];
+    [_selectButton setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
+    [_selectButton setImage:[UIImage imageNamed:@"checklist"] forState:UIControlStateSelected];
+    [_selectButton addTarget:self action:@selector(selectButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:_selectButton];
     [self.contentView addSubview:self.leftImageView];
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:AutoFrame(141, 14.5, 200, 13)];
+    nameLabel = [[UILabel alloc] initWithFrame:AutoFrame(141, 14.5, 200, 13)];
     nameLabel.textColor = RGBHex(0x333333);
     nameLabel.text = @"惠豆定制玻璃杯纪念品生日礼物";
     nameLabel.font = [UIFont systemFontOfSize:13 *ScalePpth];
     [self.contentView addSubview:nameLabel];
     
-    UILabel *weightLabel = [[UILabel alloc] initWithFrame:AutoFrame(141, 32.5, 60, 15)];
+    weightLabel = [[UILabel alloc] initWithFrame:AutoFrame(141, 32.5, 60, 15)];
     weightLabel.textColor = RGBHex(0x999999);
     weightLabel.text = @"12克拉";
     weightLabel.backgroundColor = RGBHex(0xeeeeee);
@@ -63,7 +65,7 @@
     weightLabel.font = [UIFont systemFontOfSize:10 *ScalePpth];
     [self.contentView addSubview:weightLabel];
     
-    UILabel *priceLabel = [[UILabel alloc] initWithFrame:AutoFrame(141, 85, 100, 13.5)];
+    priceLabel = [[UILabel alloc] initWithFrame:AutoFrame(141, 85, 100, 13.5)];
     priceLabel.textColor = RGBHex(0xE70422);
     priceLabel.font = [UIFont systemFontOfSize:13.5 *ScalePpth];
     [self.contentView addSubview:priceLabel];
@@ -79,12 +81,12 @@
     [self.contentView addSubview:numberVeiw];
     
     
-    numberLabel = [[UILabel alloc] initWithFrame:AutoFrame(10, 7, 60, 13)];
-    numberLabel.textColor = RGBHex(0x333333);
-    numberLabel.text = @"2";
-    numberLabel.textAlignment = NSTextAlignmentCenter;
-    numberLabel.font = [UIFont systemFontOfSize:12 *ScalePpth];
-    [numberVeiw addSubview:numberLabel];
+    _numberLabel = [[UILabel alloc] initWithFrame:AutoFrame(10, 7, 60, 13)];
+    _numberLabel.textColor = RGBHex(0x333333);
+    _numberLabel.text = @"1";
+    _numberLabel.textAlignment = NSTextAlignmentCenter;
+    _numberLabel.font = [UIFont systemFontOfSize:12 *ScalePpth];
+    [numberVeiw addSubview:_numberLabel];
     
     UIButton *reduceButton = [[UIButton alloc] initWithFrame:AutoFrame(0, -2.5, 32, 32)];
     [reduceButton setImage:[UIImage imageNamed:@"reduce"] forState:UIControlStateNormal];
@@ -101,16 +103,43 @@
 }
 - (void)selectButtonAction:(UIButton *)button {
     button.selected = !button.selected;
+    if (_buttonBlock) {
+        if (button.selected) {
+            _buttonBlock(_model.price.floatValue *_numberLabel.text.integerValue);
+        } else {
+            _buttonBlock(0.0);
+        }
+    }
 }
 - (void)buttonAction:(UIButton *)button {
-      NSInteger number = numberLabel.text.integerValue;
+      NSInteger number = _numberLabel.text.integerValue;
     if (button.tag == 100) {
         number --;
-        number= (number >= 0)?number:0;
+        number= (number >= 1)?number:1;
     } else {
         number ++;
     }
-    numberLabel.text = [NSString stringWithFormat:@"%ld",(long)number];
+    _numberLabel.text = [NSString stringWithFormat:@"%ld",(long)number];
+    self.selectButton.selected = YES;
+    if (_buttonBlock) {
+        _buttonBlock(0.0);
+    }
+    if (_numberBlock) {
+        _numberBlock(_numberLabel.text);
+    }
+}
+
+- (void)setModel:(GetMyCartModel *)model {
+    _model = model;
+    if (model) {
+        nameLabel.text = NoneNull(model.title);
+        weightLabel.text = NoneNull(model.spec);
+        [weightLabel sizeToFit];
+        NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",NoneNull(model.price)]];
+        [attri addAttribute:NSFontAttributeName value:FontSize(8.7) range:NSMakeRange(0, 1)];
+        priceLabel.attributedText = attri;
+        _numberLabel.text = NoneNull(model.num);
+    }
 }
 
 @end

@@ -141,6 +141,7 @@
     UIButton *getVerificationCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(258*ScalePpth, 249*ScalePpth +statusHeight, 68*ScalePpth, 45*ScalePpth)];
     [getVerificationCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
     [getVerificationCodeButton setTitleColor:RGBHex(0xE70422) forState:UIControlStateNormal];
+    [getVerificationCodeButton addTarget:self action:@selector(getVerificationCodeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     getVerificationCodeButton.titleLabel.font = FontSize(13);
     [self.view addSubview:getVerificationCodeButton];
     UILabel *explainLabel = [[UILabel alloc] initWithFrame:CGRectMake(66*ScalePpth, 432*ScalePpth +statusHeight, 250*ScalePpth, 10*ScalePpth)];
@@ -159,6 +160,7 @@
     [noButton addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:noButton];
     
+    
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"我已阅读并接受惠豆商城注册协议、用户隐私政策"];
     [attributedString addAttribute:NSForegroundColorAttributeName value:RGBHex(0x333333) range:NSMakeRange(0, 7)];
     [attributedString addAttribute:NSForegroundColorAttributeName value:RGBHex(0xE70422) range:NSMakeRange(7, 15)];
@@ -172,7 +174,19 @@
     tologinButton.titleLabel.font = FontSize(13);
     [self.view addSubview:tologinButton];
 }
-
+- (void)getVerificationCodeButtonAction:(UIButton *)button {
+    if (![self isMobileNumberOnly:_phoneTextField.text NonNull]) {
+        [WHToast showErrorWithMessage:@"请输入正确的手机号码"];
+        return;
+    }
+    [ZXD_NetWorking postWithUrl:[rootUrl stringByAppendingString:@"/api/index/getCodeByPhone"]params:@{@"phone":_phoneTextField.text} success:^(id  _Nonnull response) {
+        if ([response[@"status"] intValue] != 1) {
+            [WHToast showErrorWithMessage:response[@"msg"]];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [WHToast showErrorWithMessage:@"网络错误"];
+    } showHUD:YES hasToken:NO];
+}
 - (void)textFieldDidEndEditing:(UITextField *)textField {
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -185,8 +199,41 @@
     [_verificationCodeField endEditing:YES];
     [_nextpassWordTextField endEditing:YES];
 }
+    
+    //注册
 - (void)loginButtonAction:(UIButton *)button {
-   
+    if (![self isMobileNumberOnly:_phoneTextField.text NonNull]) {
+        [WHToast showErrorWithMessage:@"请输入正确的手机号码"];
+        return;
+    }
+    if (_passwordTextField.text.length < 6) {
+        [WHToast showErrorWithMessage:@"请输入6位以上密码"];
+        return;
+    }
+    if (![_passwordTextField.text isEqualToString:_nextpassWordTextField.text]) {
+        [WHToast showErrorWithMessage:@"两次输入密码不一致"];
+        return;
+    }
+    if (_verificationCodeField.text.length < 4) {
+         [WHToast showErrorWithMessage:@"请填写正确的验证码"];
+        return;
+    }
+    WeakSelf;
+    [ZXD_NetWorking postWithUrl:[rootUrl stringByAppendingString:@"/api/index/userRegister"] params:@{
+                                                                                                      @"tel":_phoneTextField.text,
+                                                                                                      @"password":_passwordTextField.text,
+                                                                                                      @"re_password":_nextpassWordTextField.text,
+                                                                                                      @"code":_verificationCodeField.text,
+                                                                                                      } success:^(id  _Nonnull response) {
+                                                                                                          if ([response[@"status"] intValue] != 1) {
+                                                                                                              [WHToast showErrorWithMessage:response[@"msg"]];
+                                                                                                              [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                                                                                                          } else {
+                                                                                                              [WHToast showSuccessWithMessage:response[@"msg"]];
+                                                                                                          }
+    } fail:^(NSError * _Nonnull error) {
+        [WHToast showErrorWithMessage:@"网络错误"];
+    } showHUD:YES hasToken:NO];
 }
 - (void)tologin:(UIButton *)button {
     [self dismissViewControllerAnimated:YES completion:nil];

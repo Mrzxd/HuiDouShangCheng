@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CommodityImageCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *theImageView;
+@property (nonatomic, strong) UILabel *htmlLabel;
 
 @end
 

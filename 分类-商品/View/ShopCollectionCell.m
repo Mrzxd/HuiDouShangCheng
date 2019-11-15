@@ -60,5 +60,14 @@
     [self.contentView addSubview:_priceLabel];
 }
 
+- (void)setListModel:(GoodsListModel *)listModel {
+    _listModel = listModel;
+    if (_listModel) {
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:[rootUrl stringByAppendingString:listModel.img]]];
+         _centerLabel.text = listModel.title NonNull;
+        _priceLabel.text = [@"￥" stringByAppendingString:listModel.price NonNull];
+    }
+}
+
 
 @end

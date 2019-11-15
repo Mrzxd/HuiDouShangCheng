@@ -52,7 +52,7 @@
     [self addTimerLoop];            //添加timer
     [self addPageControl];
     [self initImageViewButton];
-    [self addSubview:self.rateLabel];
+//    [self addSubview:self.rateLabel];
 }
 
 
@@ -158,8 +158,8 @@
             //说明是URL
             if ([self verifyURL:imageName]) {
                 NSURL *url = [NSURL URLWithString:imageName];
-//                [tempImageView sd_setImageWithURL:url
-//                                 placeholderImage:[UIImage imageNamed:@"cycle_image0"]];
+                [tempImageView sd_setImageWithURL:url
+                                 placeholderImage:[UIImage imageNamed:@"cycle_image0"]];
             } else {
                 UIImage *imageTemp = [UIImage imageNamed:imageName];
                 [tempImageView setImage:imageTemp];

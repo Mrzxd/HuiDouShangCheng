@@ -5,6 +5,7 @@
 //  Created by 张昊 on 2019/11/1.
 //  Copyright © 2019 张兴栋. All rights reserved.
 //
+#import "GoodsListModel.h"
 #import "GdCollectionReusableView.h"
 #import "CommodityClassificationTableCell.h"
 #import "ClassificationCommodityController.h"
@@ -15,10 +16,18 @@
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) NSArray <GoodsListModel *>*listModelArray;
+    
 @end
 
 @implementation CommodityClassificationController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"商品分类";
@@ -29,6 +38,16 @@
     [self.view addSubview:line];
     [self.view addSubview:self.tableView];
     [self CreatCollectionCellUI];
+    [self setUpUI];
+}
+- (void)setUpUI {
+    WeakSelf;
+    [ZXD_NetWorking postWithUrl:[rootUrl stringByAppendingString:@"/api/product/getShopCate"] params:@{@"shop_type":@"3"} success:^(id  _Nonnull response) {
+        weakSelf.dataArray = response[@"data"];
+        [weakSelf.tableView reloadData];
+        [weakSelf.collectionView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+    } showHUD:YES hasToken:YES];
 }
 - (UISearchBar *)searchBar {
     if (!_searchBar) {
@@ -114,6 +133,19 @@
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar endEditing:YES];
+    WeakSelf;
+    [ZXD_NetWorking postWithUrl:[rootUrl stringByAppendingString:@"/api/product/searchGoods"] params:@{@"good_name":NoneNull(searchBar.text)} success:^(id  _Nonnull response) {
+        if (response[@"data"] && [response[@"data"] isKindOfClass:[NSArray class]] && [response[@"data"] count]) {
+            weakSelf.listModelArray = [GoodsListModel mj_objectArrayWithKeyValuesArray:response[@"data"]];
+            ClassificationCommodityController *classicc = [ClassificationCommodityController new];
+            classicc.listModelArray = weakSelf.listModelArray;
+            [weakSelf.navigationController pushViewController:classicc animated:YES];
+        } else {
+            [WHToast showErrorWithMessage:response[@"msg"]];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [WHToast showErrorWithMessage:@"网络错误"];
+    } showHUD:YES hasToken:YES];
 }
 
 #pragma mark ------ UITableViewDelegate
@@ -123,7 +155,7 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 8;
+    return _dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50*ScalePpth;
@@ -142,6 +174,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CommodityClassificationTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommodityClassificationTableCell" forIndexPath:indexPath];
+    cell.titleLabel.text = _dataArray[indexPath.row][@"title"];
     if (indexPath.row == 0) {
         cell.contentView.backgroundColor = [UIColor whiteColor];
         cell.titleLabel.textColor = RGBHex(0xD90004);
@@ -152,15 +185,19 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    _index = indexPath.row;
+    [_collectionView reloadData];
+}
 
-#pragma mark --------------------------------CollectionView dataSource,delegate
+#pragma mark -------------------------------- CollectionView dataSource,delegate
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 6;
+    return [_dataArray[_index][@"junior"] count];
 }
 //header高度
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
@@ -175,6 +212,8 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CommodityClassificationCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CommodityClassificationCollectionCell" forIndexPath:indexPath];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[rootUrl stringByAppendingString:_dataArray[_index][@"junior"][indexPath.row][@"img"]]]];
+    cell.label.text = _dataArray[_index][@"junior"][indexPath.row][@"title"];
     return cell;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -185,7 +224,9 @@
     return UIEdgeInsetsZero;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self.navigationController pushViewController:[ClassificationCommodityController new] animated:YES];
+    ClassificationCommodityController *classicc = [ClassificationCommodityController new];
+    classicc.goodsId = _dataArray[_index][@"junior"][indexPath.row][@"id"];
+    [self.navigationController pushViewController:classicc animated:YES];
 }
 
 @end

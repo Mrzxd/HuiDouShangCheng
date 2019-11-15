@@ -20,17 +20,24 @@
     self.navigationController.navigationBar.tintColor = UIColor.whiteColor;
 }
 
+- (UIButton *)backButton {
+    
+    if (!_backButton) {
+        _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backButton.frame = CGRectMake(-30, 0, 35, 35);
+        [_backButton setTitle:@"" forState:UIControlStateNormal];
+        [_backButton setImage:[[UIImage imageNamed:@"top_left_arrow-1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+        [_backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+        [_backButton addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _backButton;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
-
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(-30, 0, 35, 35);
-    [backButton setTitle:@"" forState:UIControlStateNormal];
-    [backButton setImage:[[UIImage imageNamed:@"top_left_arrow-1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
-    [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    [backButton addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backButton];
     self.view.backgroundColor = UIColor.whiteColor;
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init]forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
@@ -42,12 +49,29 @@
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = _titleLabel;
 }
+- (void)setWhiteBackButton {
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(0, 0, 35, 35);
+    [rightButton setImage:[[UIImage imageNamed:@"de_lefttop"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [rightButton addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
+}
 
+- (UIButton *)rightButtons {
+    if (!_rightButtons) {
+        _rightButtons= [UIButton buttonWithType:UIButtonTypeCustom];
+        _rightButtons.frame = CGRectMake(0, 0, 35, 35);
+        [_rightButtons setTitleColor:RGBHex(0x999999) forState:UIControlStateNormal];
+        _rightButtons.titleLabel.font = FontSize(13);
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightButtons];
+        [_rightButtons addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _rightButtons;
+}
 - (void)setTitle:(NSString *)title {
     _titleLabel.text  = title;
     [_titleLabel sizeToFit];
 }
-
 - (void)pop
 {
     if (_isPresent)

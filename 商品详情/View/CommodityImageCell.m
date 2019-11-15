@@ -20,12 +20,20 @@
     }
     return self;
 }
-
+- (UILabel *)htmlLabel {
+    if (!_htmlLabel) {
+        _htmlLabel = [[UILabel alloc] initWithFrame:AutoFrame(10, 10, 355, 1000)];
+        _htmlLabel.numberOfLines = 0;
+        _htmlLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    }
+    return _htmlLabel;
+}
 - (void)setUpUI {
-    self.theImageView = [[UIImageView alloc] initWithFrame:AutoFrame(0, 0, 375, 375)];
-    self.theImageView.contentMode = UIViewContentModeScaleAspectFit;
-    self.theImageView.image = [UIImage imageNamed:@"detailImage.png"];
-    [self.contentView addSubview:self.theImageView];
+    [self.contentView addSubview:self.htmlLabel];
+    [self.htmlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(self.contentView).offset(10*ScalePpth);
+        make.bottom.right.equalTo(self.contentView).offset(-10*ScalePpth);
+    }];
 }
 
 @end

@@ -13,7 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZXDBaseViewController : UIViewController
 
 @property BOOL isPresent;
+@property(nonatomic, strong) UIButton *backButton;
+@property(nonatomic, strong) UIButton *rightButtons;
 @property (nonatomic, strong) UILabel *titleLabel;
+- (void)setWhiteBackButton;
+- (void)rightButtonAction:(UIButton *)button;
 
 @end
 

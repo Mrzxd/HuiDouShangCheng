@@ -34,7 +34,8 @@ typedef void(^ZXDDownloadProgress)(int64_t bytesProgress,
 typedef NSURLSessionTask ZXDURLSessionTask;
 
 @interface ZXD_NetWorking : NSObject
-
+    
+    
 /**
  *  单例
  *
@@ -65,7 +66,8 @@ typedef NSURLSessionTask ZXDURLSessionTask;
                            params:(NSDictionary *)params
                           success:(void(^)(id respones))success
                              fail:(void(^)(NSError *error))fail
-                          showHUD:(BOOL)showHUD;
+                          showHUD:(BOOL)showHUD
+                         hasToken:(BOOL)hasToken;
 
 /**
  *  post请求方法,block回调
@@ -80,7 +82,8 @@ typedef NSURLSessionTask ZXDURLSessionTask;
                             params:(NSDictionary *)params
                            success:(ZXDResponseSuccess)success
                               fail:(ZXDResponseFail)fail
-                           showHUD:(BOOL)showHUD;
+                           showHUD:(BOOL)showHUD
+                          hasToken:(BOOL)hasToken;
 
 /**
  *  上传图片方法

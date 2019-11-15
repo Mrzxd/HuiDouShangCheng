@@ -47,7 +47,7 @@
     titleLabel.textColor = RGBHex(0x000000);
     [_whiteView addSubview:titleLabel];
     
-    NSArray *imageArray = @[@"",@""];
+    NSArray *imageArray = @[@"jindou",@"yindou"];
     NSArray *titleArray = @[@"x 1",@"x 2"];
     for (NSInteger i = 0; i < 2; i ++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:AutoFrame(104, (70+i*31), 21, 21)];
@@ -57,6 +57,7 @@
         UILabel *numLabel = [[UILabel alloc] initWithFrame:AutoFrame(140, (76+i*31), 100, 15)];
         numLabel.font = [UIFont systemFontOfSize:15 *ScalePpth];
         numLabel.text = titleArray[i];
+        numLabel.tag = 100 + i;
         numLabel.textColor = RGBHex(0x000000);
         [_whiteView addSubview:numLabel];
     }
@@ -71,7 +72,15 @@
     receiveButton.titleLabel.font = FontSize(15);
     [_whiteView addSubview:receiveButton];
 }
-
+- (void)setData:(NSDictionary *)data {
+    _data = data;
+    if (data) {
+        UILabel *label1 = (UILabel *)[self.whiteView viewWithTag:100];
+        UILabel *label2 = (UILabel *)[self.whiteView viewWithTag:101];
+        label1.text = [@"x " stringByAppendingString:data[@"balance"]];
+        label2.text = [@"x " stringByAppendingString:data[@"integral"]];
+    }
+}
 - (void)receiveButtonAction:(UIButton *)button {
     [self removeFromSuperview];
 }

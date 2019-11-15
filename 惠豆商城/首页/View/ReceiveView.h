@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ReceiveView : UIView
-
+@property (nonatomic, strong) NSDictionary *data;
 @end
 
 NS_ASSUME_NONNULL_END

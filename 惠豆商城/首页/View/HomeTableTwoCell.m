@@ -57,7 +57,22 @@
     [button setTitle:@"导航" forState:UIControlStateNormal];
     button.titleLabel.font = FontSize(12);
     [button setTitleColor:RGBHex(0xFF5F56) forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:button];
+}
+- (void)buttonAction:(UIButton *)button {
+    if (_navigationBlock) {
+        _navigationBlock(_typeModel);
+    }
+}
+- (void)setTypeModel:(HomeTypeModel *)typeModel {
+    _typeModel = typeModel;
+    if (_typeModel) {
+        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:NoneNull(typeModel.img)] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+        _centerLabel.text = NoneNull(typeModel.title);
+        _bottomLabel.text = NoneNull(typeModel.address);
+        _rightLabel.text =  [NSString stringWithFormat:@"距离%@公里",NoneNull(typeModel.km)];
+    }
 }
 
 @end

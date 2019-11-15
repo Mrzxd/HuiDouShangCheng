@@ -29,7 +29,7 @@
     _nameLabel.text = @"规格";
     [self.contentView addSubview:_nameLabel];
     
-    _nameContentLabel = [[UILabel alloc] initWithFrame:AutoFrame(50, 11, 90, 18)];
+    _nameContentLabel = [[UILabel alloc] initWithFrame:AutoFrame(50, 11, 300, 18)];
     _nameContentLabel.font = [UIFont systemFontOfSize:13 *ScalePpth];
     _nameContentLabel.textColor = RGBHex(0x333333);
     _nameContentLabel.text = @"默认";

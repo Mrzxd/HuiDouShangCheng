@@ -6,7 +6,9 @@
 //  Created by 张昊 on 2019/11/4.
 //  Copyright © 2019 张兴栋. All rights reserved.
 //
-
+#import "MyOrderController.h"
+#import "MyShippingAddressController.h"
+#import "BusinessCenterController.h"
 #import "MineController.h"
 
 @interface MineController ()
@@ -46,9 +48,13 @@
     CGGradientRelease(gradient);
     CGColorSpaceRelease(colorSpace);
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = YES;
+    
     self.view.backgroundColor = RGBHex(0xF7F6FA);
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.headerView];
@@ -120,6 +126,7 @@
     [button setImage:[UIImage imageNamed:@"my_right_arrow"] forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(0, 60*ScalePpth, 0, 0)];
     [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 15*ScalePpth)];
+    [button addTarget:self action:@selector(seeAll:) forControlEvents:UIControlEventTouchUpInside];
     [_middleView addSubview:button];
     
     UIView *lineView = [[UIView alloc] initWithFrame:AutoFrame(0, 35, 355, 0.5)];
@@ -141,6 +148,9 @@
         [_middleView addSubview:nameLabel];
     }
 }
+- (void)seeAll:(UIButton *)button {
+    [self.navigationController pushViewController:[MyOrderController new] animated:YES];
+}
 - (void)addBottomSubViews {
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:AutoFrame(10,15,100,15)];
     nameLabel.textColor = RGBHex(0x333333);
@@ -149,11 +159,8 @@
     [_bottomView addSubview:nameLabel];
     
     NSArray *nameArray = @[@"my_property",@"my_center",@"my_indent",@"my_silver",@"my_site",@"my_invite",@"my_discount",@"my_service",@"my_about",@"my_application",@"my_data"];
-    NSArray *titleArray = @[@"我的资产",@"商家中心",@"金豆订单",@"银豆订单",@"收货地址",@"邀请好友",@"优惠券",@"客服中心",@"我的好友",@"我的好友",@"我的资料"];
+    NSArray *titleArray = @[@"我的资产",@"商家中心",@"金豆订单",@"银豆订单",@"收货地址",@"邀请好友",@"优惠券",@"客服中心",@"我的好友",@"代理申请",@"我的资料"];
     for (NSInteger i = 0; i < 11; i ++) {
-        UIButton *button = [[UIButton alloc] initWithFrame:AutoFrame(375.0/4 *(i%4), (44+i/4*61), 375.0/4, 25)];
-        [button setImage:[UIImage imageNamed:nameArray[i]] forState:UIControlStateNormal];
-        [_bottomView addSubview:button];
         
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:AutoFrame(375.0/4 *(i%4), (74+i/4*61.5), 375/4, 12)];
         nameLabel.textColor = RGBHex(0x666666);
@@ -161,6 +168,27 @@
         nameLabel.textAlignment = NSTextAlignmentCenter;
         nameLabel.font  = [UIFont systemFontOfSize:12*ScalePpth];
         [_bottomView addSubview:nameLabel];
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:AutoFrame(375.0/4 *(i%4), (36.5+i/4*61), 375.0/4, 40)];
+        [button setImage:[UIImage imageNamed:nameArray[i]] forState:UIControlStateNormal];
+        button.tag = 100+i;
+        [button addTarget:self action:@selector(buttonToActions:) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:button];
+    }
+}
+- (void)buttonToActions:(UIButton *)button {
+    switch (button.tag) {
+        case 100:
+             [self.navigationController pushViewController:[RechargeController new] animated:YES];
+            break;
+         case 101:
+             [self.navigationController pushViewController:[BusinessCenterController new] animated:YES];
+            break;
+        case 104:
+            [self.navigationController pushViewController:[MyShippingAddressController new] animated:YES];
+            break;
+        default:
+            break;
     }
 }
 - (void)addheaderViewSubViews {

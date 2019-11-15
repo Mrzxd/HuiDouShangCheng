@@ -21,18 +21,18 @@
 }
 
 - (void)setUI {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:AutoFrame(18.5, 8, 55, 55)];
-    imageView.backgroundColor = [UIColor lightGrayColor];
-    imageView.layer.masksToBounds = YES;
-    imageView.layer.cornerRadius = 27.5*ScalePpth;
-    [self.contentView addSubview:imageView];
+    _imageView = [[UIImageView alloc] initWithFrame:AutoFrame(18.5, 8, 55, 55)];
+    _imageView.backgroundColor = [UIColor lightGrayColor];
+    _imageView.layer.masksToBounds = YES;
+    _imageView.layer.cornerRadius = 27.5*ScalePpth;
+    [self.contentView addSubview:_imageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:AutoFrame(0, 73, 276/3, 12)];
-    label.font = FontSize(12);
-    label.text = @"TCL";
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = RGBHex(0x333333);
-    [self.contentView addSubview:label];
+    _label = [[UILabel alloc] initWithFrame:AutoFrame(0, 73, 276/3, 12)];
+    _label.font = FontSize(12);
+    _label.text = @"TCL";
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.textColor = RGBHex(0x333333);
+    [self.contentView addSubview:_label];
 }
 
 @end
