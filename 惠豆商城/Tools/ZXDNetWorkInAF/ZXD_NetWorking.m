@@ -8,6 +8,7 @@
 
 #import "ZXD_NetWorking.h"
 #import <AFNetworking.h>
+#import "LoginController.h"
 #import <AFNetworkActivityIndicatorManager.h>
 
 
@@ -106,6 +107,9 @@ typedef NS_ENUM(NSUInteger, ZXD_NetWorking_ENUM) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //             DLog(@"请求成功=%@",responseObject);
             if (success) {
+                if (responseObject && [responseObject[@"status"] intValue] == -2) {
+                    [UIApplication sharedApplication].keyWindow.rootViewController = [LoginController new];
+                }
                 success(responseObject);
             }
             [[self tasks] removeObject:sessionTask];

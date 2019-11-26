@@ -101,11 +101,6 @@
     [self.locationManager requestWhenInUseAuthorization];
     [self.locationManager startUpdatingLocation];
 }
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    CLLocation *currentLocation = locations.lastObject;
-    _clannotation = currentLocation;
-    
-}
 - (CLLocationManager *)locationManager {
     if (!_locationManager) {
         _locationManager = [[CLLocationManager alloc] init];
@@ -116,6 +111,15 @@
     }
     return _locationManager;
 }
+
+#pragma mark ---------- CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    CLLocation *currentLocation = locations.lastObject;
+    _clannotation = currentLocation;
+    
+}
+
 - (ZXDLabelInViewDisplay *)labelInViewDisplay {
     if (!_labelInViewDisplay) {
         _labelInViewDisplay = [ZXDLabelInViewDisplay zlImageViewDisplayViewWithFrame:AutoFrame(0, 161.5, 375, 20)];

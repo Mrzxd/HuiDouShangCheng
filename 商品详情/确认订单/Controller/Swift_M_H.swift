@@ -16,6 +16,10 @@ public func AutoFrame(x:CGFloat,y:CGFloat,width:CGFloat,height:CGFloat) -> CGRec
     return CGRect(x: x*ScalePpth, y: y*ScalePpth, width: width*ScalePpth, height: height*ScalePpth)
 }
 
+public func FontSize(height:CGFloat) -> UIFont {
+    return UIFont.systemFont(ofSize: height*ScalePpth)
+}
+
 extension UIColor {
     convenience init(rgb: UInt) {
         self.init(

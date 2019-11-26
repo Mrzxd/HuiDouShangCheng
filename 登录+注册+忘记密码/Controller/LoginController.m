@@ -93,7 +93,7 @@
         [forgetButton setTitle:@"忘记密码" forState:UIControlStateNormal];
         [forgetButton setTitleColor:RGBHex(0x999999) forState:UIControlStateNormal];
         forgetButton.titleLabel.font = FontSize(13);
-//        [forgetButton addTarget:self action:@selector(forgetButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [forgetButton addTarget:self action:@selector(forgetButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:forgetButton];
         
     }
@@ -127,7 +127,6 @@
         return;
     }
     WeakSelf;
-   
     [ZXD_NetWorking postWithUrl:[rootUrl stringByAppendingString:@"/api/index/userLogin"] params:@{
                                                                                                    @"type":@"2",
                                                                                                    @"account":_phoneTextField.text,
@@ -138,11 +137,16 @@
                                                                                                        } else {
                                                                                                            [[NSUserDefaults standardUserDefaults] setObject:response[@"data"][@"token"] forKey:@"user-token"];
                                                                                                            ZXDTabBarController *tabbarVc = [ZXDTabBarController new];
+                                                                                                            GlobalSingleton.gS_ShareInstance.zxdTabBarController = tabbarVc;
                                                                                                            [weakSelf presentViewController:tabbarVc animated:YES completion:nil];
                                                                                                        }
     } fail:^(NSError * _Nonnull error) {
          [WHToast showErrorWithMessage:@"网络错误"];
     } showHUD:YES hasToken:NO];
+}
+- (void)forgetButtonAction:(UIButton *)button {
+    LBNavigationController *navi = [[LBNavigationController alloc] initWithRootViewController:[ForgetPasswordController new]];
+    [self presentViewController:navi animated:YES completion:nil];
 }
 - (void)toRegisters:(UIButton *)button {
     [self presentViewController:[[RegisterController alloc] init] animated:YES completion:nil];

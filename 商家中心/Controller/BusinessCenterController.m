@@ -114,6 +114,7 @@
     [cashWithdrawalButton setTitle:@"提现 " forState:UIControlStateNormal];
     [cashWithdrawalButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     cashWithdrawalButton.titleLabel.font = FontSize(13);
+    [cashWithdrawalButton addTarget:self action:@selector(cashWithdrawalButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [centerWhiteView addSubview:cashWithdrawalButton];
     
     UIView *bottomWhiteView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(centerWhiteView.frame)+10*ScalePpth, ScreenWidth, ScreenHeight - KNavigationHeight - 244*ScalePpth)];
@@ -139,10 +140,22 @@
         UIImageView *arrowView = [[UIImageView alloc] initWithFrame:AutoFrame(355, (20.5+i*50.5), 6, 11)];
         arrowView.image = [UIImage imageNamed:@"issue_arrows"];
         [bottomWhiteView addSubview:arrowView];
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:AutoFrame(0, i*50.5, 375, 50)];
+        [button addTarget:self action:@selector(typeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = 500+i;
+        [bottomWhiteView addSubview:button];
     }
 }
 
-
+- (void)typeButtonAction:(UIButton *)button {
+    if (button.tag == 500) {
+        [self.navigationController pushViewController:[CashierController new] animated:YES];
+    }
+}
+- (void)cashWithdrawalButtonAction:(UIButton *)button {
+    [self.navigationController pushViewController:[CashWithDrawalController new] animated:YES];
+}
 
 
 

@@ -11,9 +11,9 @@
 
 #ifdef __OBJC__
 
-
 #import "ZXDBaseViewController.h"
 #import "ZLImageViewDisplayView.h"
+#import "LBNavigationController.h"
 #import "UIViewController+ImagePicker.h"
 //#import "UIScrollView+MJRefreshEX.h"
 #import "ZXD_NetWorking.h"
@@ -26,6 +26,7 @@
 #import "NSObject+JudgmentClass.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "惠豆商城-Swift.h"
+#import "GlobalSingleton.h"
 
 #endif
 

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6110383523823524000DE0FF /* ForgetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6110383423823524000DE0FF /* ForgetPasswordController.swift */; };
+		611253BE2384D087001F0336 /* AddBankCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611253BD2384D087001F0336 /* AddBankCardController.swift */; };
+		611253C02384D6AB001F0336 /* VerifyBankCardInformationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611253BF2384D6AB001F0336 /* VerifyBankCardInformationController.swift */; };
+		611253C22384DB05001F0336 /* SMSVerificationCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611253C12384DB05001F0336 /* SMSVerificationCodeController.swift */; };
+		61137C5B237E53F700983C67 /* GlobalSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61137C5A237E53F700983C67 /* GlobalSingleton.m */; };
 		611415F4236BC66B004782F8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 611415F3236BC66B004782F8 /* AppDelegate.m */; };
 		611415FC236BC66C004782F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 611415FB236BC66C004782F8 /* Assets.xcassets */; };
 		61141602236BC66C004782F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61141601236BC66C004782F8 /* main.m */; };
@@ -69,6 +74,8 @@
 		611D8AC52373A831005B0A09 /* Swift_M_H.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D8AC42373A831005B0A09 /* Swift_M_H.swift */; };
 		611D8AC72373AB98005B0A09 /* PaymentGrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D8AC62373AB98005B0A09 /* PaymentGrayView.swift */; };
 		6120227D237A613700C2C647 /* GetMyCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6120227C237A613700C2C647 /* GetMyCartModel.m */; };
+		6128237E238404C30088659E /* CashierController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6128237D238404C30088659E /* CashierController.swift */; };
+		6128238423840C9B0088659E /* CashWithDrawalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6128238323840C9B0088659E /* CashWithDrawalController.swift */; };
 		6175876F237CF3A20091EC23 /* ZXDLabelInViewDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6175876E237CF3A20091EC23 /* ZXDLabelInViewDisplay.m */; };
 		61758772237D04F80091EC23 /* HomeTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61758771237D04F80091EC23 /* HomeTypeModel.m */; };
 		61758774237D23C70091EC23 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61758773237D23C70091EC23 /* CoreLocation.framework */; };
@@ -131,6 +138,12 @@
 /* Begin PBXFileReference section */
 		28069F6BE35C0A2A008FD55F /* Pods-惠豆商城Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-惠豆商城Tests.release.xcconfig"; path = "Target Support Files/Pods-惠豆商城Tests/Pods-惠豆商城Tests.release.xcconfig"; sourceTree = "<group>"; };
 		4DC2D17C7059BCBEB0A8FF08 /* Pods-惠豆商城UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-惠豆商城UITests.release.xcconfig"; path = "Target Support Files/Pods-惠豆商城UITests/Pods-惠豆商城UITests.release.xcconfig"; sourceTree = "<group>"; };
+		6110383423823524000DE0FF /* ForgetPasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordController.swift; sourceTree = "<group>"; };
+		611253BD2384D087001F0336 /* AddBankCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBankCardController.swift; sourceTree = "<group>"; };
+		611253BF2384D6AB001F0336 /* VerifyBankCardInformationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyBankCardInformationController.swift; sourceTree = "<group>"; };
+		611253C12384DB05001F0336 /* SMSVerificationCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationCodeController.swift; sourceTree = "<group>"; };
+		61137C59237E53F700983C67 /* GlobalSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSingleton.h; sourceTree = "<group>"; };
+		61137C5A237E53F700983C67 /* GlobalSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalSingleton.m; sourceTree = "<group>"; };
 		611415EF236BC66B004782F8 /* 惠豆商城.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "惠豆商城.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		611415F2236BC66B004782F8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		611415F3236BC66B004782F8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -251,6 +264,8 @@
 		611D8AC62373AB98005B0A09 /* PaymentGrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentGrayView.swift; sourceTree = "<group>"; };
 		6120227B237A613700C2C647 /* GetMyCartModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMyCartModel.h; sourceTree = "<group>"; };
 		6120227C237A613700C2C647 /* GetMyCartModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetMyCartModel.m; sourceTree = "<group>"; };
+		6128237D238404C30088659E /* CashierController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashierController.swift; sourceTree = "<group>"; };
+		6128238323840C9B0088659E /* CashWithDrawalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashWithDrawalController.swift; sourceTree = "<group>"; };
 		6175876D237CF3A20091EC23 /* ZXDLabelInViewDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDLabelInViewDisplay.h; sourceTree = "<group>"; };
 		6175876E237CF3A20091EC23 /* ZXDLabelInViewDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDLabelInViewDisplay.m; sourceTree = "<group>"; };
 		61758770237D04F80091EC23 /* HomeTypeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTypeModel.h; sourceTree = "<group>"; };
@@ -370,7 +385,7 @@
 				611A2CD12375013700AF5264 /* 附近门店 */,
 				61A9443723710048001CFEBB /* 商品详情 */,
 				61A72F6223701FB800D8053E /* 分类-商品 */,
-				61A72F5723700CC200D8053E /* 登录+注册 */,
+				61A72F5723700CC200D8053E /* 登录+注册+忘记密码 */,
 				61A72F4D236FCC2A00D8053E /* 我的 */,
 				61A72F43236FACBA00D8053E /* 购物车 */,
 				611416C2236C1CCA004782F8 /* 商品分类 */,
@@ -400,6 +415,8 @@
 			children = (
 				611415F2236BC66B004782F8 /* AppDelegate.h */,
 				611415F3236BC66B004782F8 /* AppDelegate.m */,
+				61137C59237E53F700983C67 /* GlobalSingleton.h */,
+				61137C5A237E53F700983C67 /* GlobalSingleton.m */,
 				61141674236BD1AE004782F8 /* GPAdaptationHeader.h */,
 				618DD68F23727834003B83F7 /* fruit.png */,
 				611415FB236BC66C004782F8 /* Assets.xcassets */,
@@ -874,6 +891,8 @@
 		611A2D332375845300AF5264 /* 商家中心 */ = {
 			isa = PBXGroup;
 			children = (
+				6128237F23840C270088659E /* 提现、添加银行卡 */,
+				61282379238404000088659E /* 收银台 */,
 				611A2D362375846B00AF5264 /* Model */,
 				611A2D352375846900AF5264 /* View */,
 				611A2D342375846700AF5264 /* Controller */,
@@ -948,6 +967,73 @@
 				6117B8DE237BA43A009D2EEC /* AddressModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		61282379238404000088659E /* 收银台 */ = {
+			isa = PBXGroup;
+			children = (
+				6128237C2384040D0088659E /* Model */,
+				6128237B2384040B0088659E /* View */,
+				6128237A238404090088659E /* Controller */,
+			);
+			path = "收银台";
+			sourceTree = "<group>";
+		};
+		6128237A238404090088659E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6128237D238404C30088659E /* CashierController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		6128237B2384040B0088659E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6128237C2384040D0088659E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6128237F23840C270088659E /* 提现、添加银行卡 */ = {
+			isa = PBXGroup;
+			children = (
+				6128238223840C510088659E /* View */,
+				6128238123840C4F0088659E /* Model */,
+				6128238023840C4C0088659E /* Controller */,
+			);
+			path = "提现、添加银行卡";
+			sourceTree = "<group>";
+		};
+		6128238023840C4C0088659E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6128238323840C9B0088659E /* CashWithDrawalController.swift */,
+				611253BD2384D087001F0336 /* AddBankCardController.swift */,
+				611253BF2384D6AB001F0336 /* VerifyBankCardInformationController.swift */,
+				611253C12384DB05001F0336 /* SMSVerificationCodeController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		6128238123840C4F0088659E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6128238223840C510088659E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		61758769237CF3040091EC23 /* ZXDLabelInViewDisplay */ = {
@@ -1123,14 +1209,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		61A72F5723700CC200D8053E /* 登录+注册 */ = {
+		61A72F5723700CC200D8053E /* 登录+注册+忘记密码 */ = {
 			isa = PBXGroup;
 			children = (
 				61A72F5A23700CD000D8053E /* Model */,
 				61A72F5923700CCF00D8053E /* View */,
 				61A72F5823700CCD00D8053E /* Controller */,
 			);
-			path = "登录+注册";
+			path = "登录+注册+忘记密码";
 			sourceTree = "<group>";
 		};
 		61A72F5823700CCD00D8053E /* Controller */ = {
@@ -1140,6 +1226,7 @@
 				61A72F5C23700D7B00D8053E /* LoginController.m */,
 				61A72F5E2370182000D8053E /* RegisterController.h */,
 				61A72F5F2370182000D8053E /* RegisterController.m */,
+				6110383423823524000DE0FF /* ForgetPasswordController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1515,6 +1602,7 @@
 			files = (
 				619F70722376B73600D92239 /* GoodsListModel.m in Sources */,
 				61A72F6123701AFD00D8053E /* RegisterController.m in Sources */,
+				6128237E238404C30088659E /* CashierController.swift in Sources */,
 				611A2D0B2375622500AF5264 /* RechargeRecordController.m in Sources */,
 				618FD27F23765E2700100BC5 /* EditAddressController.m in Sources */,
 				611416B8236C04E5004782F8 /* HomeTableTwoCell.m in Sources */,
@@ -1530,6 +1618,7 @@
 				611A2D0E237562AF00AF5264 /* TransactionDetailsCell.m in Sources */,
 				611A2CD7237501AA00AF5264 /* NearbyStoreController.m in Sources */,
 				611416A5236BD1FF004782F8 /* LBNavigationController.m in Sources */,
+				611253BE2384D087001F0336 /* AddBankCardController.swift in Sources */,
 				611A2D1C23756A9E00AF5264 /* WillPayController.m in Sources */,
 				611A2CDE2375054700AF5264 /* MerchantEntryController.m in Sources */,
 				61A72F4C236FBC0000D8053E /* ShoppingCartCell.m in Sources */,
@@ -1539,6 +1628,7 @@
 				611416AB236BD1FF004782F8 /* AxcAE_TabBarItem.m in Sources */,
 				618DD68E23726C0F003B83F7 /* ConfirmationOrderController.m in Sources */,
 				611A2CF023750CAB00AF5264 /* SettledInDepositCell.m in Sources */,
+				6128238423840C9B0088659E /* CashWithDrawalController.swift in Sources */,
 				61758772237D04F80091EC23 /* HomeTypeModel.m in Sources */,
 				6115E36123764959006A067B /* MyShippingAddressController.m in Sources */,
 				61A9445223711A4C001CFEBB /* YTSegmentBarVC.m in Sources */,
@@ -1552,6 +1642,7 @@
 				61141602236BC66C004782F8 /* main.m in Sources */,
 				6117B8DF237BA43A009D2EEC /* AddressModel.m in Sources */,
 				611416A8236BD1FF004782F8 /* ZXDTabBarController.m in Sources */,
+				611253C22384DB05001F0336 /* SMSVerificationCodeController.swift in Sources */,
 				611416A1236BD1FF004782F8 /* CategoryLabel.m in Sources */,
 				611416A3236BD1FF004782F8 /* UIImage+Image.m in Sources */,
 				6115E3692376555F006A067B /* MyShippingAdressCell2.m in Sources */,
@@ -1582,12 +1673,14 @@
 				611D8AC52373A831005B0A09 /* Swift_M_H.swift in Sources */,
 				611416AA236BD1FF004782F8 /* AxcAE_TabBar.m in Sources */,
 				61A9445123711A4C001CFEBB /* YTSegmentBar.m in Sources */,
+				6110383523823524000DE0FF /* ForgetPasswordController.swift in Sources */,
 				611416CC236C21BE004782F8 /* CommodityClassificationTableCell.m in Sources */,
 				611A2CE12375068000AF5264 /* EmployerCertificationTexyfieldCell.m in Sources */,
 				61A72F5D23700D7B00D8053E /* LoginController.m in Sources */,
 				611416AC236BD1FF004782F8 /* BaseTabBar.m in Sources */,
 				6120227D237A613700C2C647 /* GetMyCartModel.m in Sources */,
 				611416CF236C2B7A004782F8 /* GdCollectionReusableView.m in Sources */,
+				61137C5B237E53F700983C67 /* GlobalSingleton.m in Sources */,
 				611A2D39237584B900AF5264 /* BusinessCenterController.m in Sources */,
 				61A72F6823701FEA00D8053E /* ClassificationCommodityController.m in Sources */,
 				611415F4236BC66B004782F8 /* AppDelegate.m in Sources */,
@@ -1597,6 +1690,7 @@
 				61A9445323711A4C001CFEBB /* UIView+YTSegmentBar.m in Sources */,
 				611416D2236C2DD0004782F8 /* CommodityClassificationCollectionCell.m in Sources */,
 				61A9443D2371029D001CFEBB /* CommodityDetailsController.m in Sources */,
+				611253C02384D6AB001F0336 /* VerifyBankCardInformationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

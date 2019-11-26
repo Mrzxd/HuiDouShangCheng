@@ -18,13 +18,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user-token"]) {
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user-token"]) {
         ZXDTabBarController *tabBarController = [ZXDTabBarController new];
         self.window.rootViewController = tabBarController;
-    } else {
-        LoginController *loginController = [LoginController new];
-        self.window.rootViewController = loginController;
-    }
+        GlobalSingleton.gS_ShareInstance.zxdTabBarController = tabBarController;
+//    } else {
+//        LoginController *loginController = [LoginController new];
+//        self.window.rootViewController = loginController;
+//    }
     [self.window makeKeyAndVisible];
     return YES;
 }
